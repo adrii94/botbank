@@ -1,0 +1,21 @@
+
+<h4>Env&iacute;o de mensajes</h4>
+<div class="row">
+	<div class="form-group">
+		<div class="col-md-6">
+			<label>Mensaje:</label> <input type="text" class="form-control"
+				ng-model="message" />
+		</div>
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-md-6">
+		<label>Amigo: </label> <select class="form-control"
+			ng-model="friend"
+			ng-options="f as f.nombre for f in friends"><option></option></select>
+	</div>
+</div>
+<br>
+<button type="button" class="btn btn-sm btn-info"
+	ng-click="sendMessages()">Distribuir</button>

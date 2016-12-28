@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJDoLSd8IKc7nsJ7Ck673TBK_KBp8uuHs" 
+          type="text/javascript"></script>
+</head> 
+<body>
+  <div id="map" style="width: 1000px; height: 2000px;"></div>
+
+  <script type="text/javascript">
+    var latitud = getQueryVariable('latitud');
+    var longitud = getQueryVariable('longitud');
+    var locations = [
+      ['CAC CARSO' +'<a href='+'https://www.google.es/maps/dir/'+latitud+','+longitud+'/19.4414623,-99.2045969/data=!4m2!4m1!3e0><p/><h1>Ir</h1></a>', 19.4414623,-99.2045969, 4],
+      ['CAC Masaryk'+'<a href='+'https://www.google.es/maps/dir/'+latitud+','+longitud+'/19.41726,-99.1944203/data=!4m2!4m1!3e0><p/><h1>Ir</h1></a>', 19.41726,-99.1944203,5],   
+      ['CAC Reforma 222'+'<a href='+'https://www.google.es/maps/dir/'+latitud+','+longitud+'/19.41726,-99.1956181/data=!4m2!4m1!3e0><p/><h1>Ir</h1></a>', 19.41726,-99.1956181, 2],
+      ['CAC Camarones'+'<a href='+'https://www.google.es/maps/dir/'+latitud+','+longitud+'/19.4485302,-99.1713532/data=!4m2!4m1!3e0><p/><h1>Ir</h1></a>',19.4485302,-99.1713532, 1],
+      ['CAC Centro Historico'+'<a href='+'https://www.google.es/maps/dir/'+latitud+','+longitud+'/19.44071,-99.183704/data=!4m2!4m1!3e0><p/><h1>Ir</h1></a>', 19.44071,-99.183704, 3],
+      ['CAC Reforma Lomas'+'<a href='+'https://www.google.es/maps/dir/'+latitud+','+longitud+'/19.4123241,-99.18825/data=!4m2!4m1!3e0><p/><h1>Ir</h1></a>', 19.4123241,-99.18825, 3],
+      ['CAC Pabellón Polanco'+'<a href='+'https://www.google.es/maps/dir/'+latitud+','+longitud+'/19.4430953,-99.2102382/data=!4m2!4m1!3e0><p/><h1>Ir</h1></a>', 19.4430953,-99.2102382, 3]
+
+    ];
+
+
+    console.log(latitud);
+     console.log(longitud);
+    var image = 'images/globoPin.png';
+    var pin = 'images/pin.png';
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: new google.maps.LatLng(latitud, longitud),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+        icon: pin
+    });
+
+    marker = new google.maps.Marker({
+    map: map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    position: new google.maps.LatLng(latitud, longitud),
+    title:"YO",
+    icon: pin
+  });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map,
+        icon: image
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+
+
+    function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+  </script>
+</body>
+</html>
